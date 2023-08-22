@@ -199,6 +199,7 @@ if __name__ == '__main__':
     #     end_place = trip.end_place
     #     distance = calculating_distance(start_place,end_place)
     #     print(f"Distance: {distance:.2f}miles ")
+    
     # calculating total expense by using username associated with trip
     # trip = session.query(Trip,User).join(User).filter(User.user_name == 'Heshu').first()
     # if trip:
@@ -210,8 +211,8 @@ if __name__ == '__main__':
     #     trip_expense_cost = gallons * trip.Trip.avg_gas_price
     #     print(f"trip expense: {trip_expense_cost:.2f}")
 
-    # trip,user_agent = session.query(Trip,User).filter(User.user_name == 'Heshu').first()
-        
+    ##getting warning because not using jointable , above was the correccted code
+    # trip,user = session.query(Trip,User).filter(User.user_name == 'Heshu').first()
     # if trip and user:
     #     start_place = trip.start_place
     #     end_place = trip.end_place
@@ -220,3 +221,62 @@ if __name__ == '__main__':
     #     gallons = distance_miles / (trip.fuel_efficiency_mpg or 1)
     #     trip_expense_cost = gallons * trip.avg_gas_price
     #     print(trip_expense_cost)
+
+    #testing expense dbtable
+
+    ##printing trips and associated expense details based on user_id 
+    # user_trips = session.query(Trip).filter_by(user_id=4).all()
+    # for trip in user_trips:
+    #     print(trip)
+    #     # Access associated expenses and print their details
+    #     for expense in trip.expenses:
+    #         print( expense)
+        ##printing trips and associated expense details with total cost    
+    # user_trips = session.query(Trip).filter_by(user_id=3).all()
+    # totalExpense_Cost=0
+    # for trip in user_trips:
+    #     print(trip)
+    #     for expense in trip.expenses:
+    #         print(expense)
+    #         totalExpense_Cost +=expense.spent_amount
+    #     print(f"totalExpense_Cost:{totalExpense_Cost}")
+
+
+    def calculate_trip_expense(trip):
+        distance_miles = calculating_distance(trip.start_place,trip.end_place)
+        gallons = distance_miles / (trip.fuel_efficiency_mpg or 1)
+        trip_expense_cost = gallons * trip.avg_gas_price
+        print(trip_expense_cost)
+        return trip_expense_cost
+    # user_trips = session.query(Trip).filter_by(user_id=9).all()
+    # #totalExpense_Cost=0
+    # for trip in user_trips:
+    #     print(trip)
+    #     trip_expense_cost = calculate_trip_expense(trip)
+    #     totalExpense_Cost = trip_expense_cost
+    #     for expense in trip.expenses:
+    #         print(expense)
+    #         totalExpense_Cost +=expense.spent_amount
+    #     print(f"totalExpense_Cost:{totalExpense_Cost}")
+
+    def calculate_total_user_expense(user_id):
+        user_trips = session.query(Trip).filter_by(user_id=user_id).all()
+        totalExpense_Cost=0
+        for trip in user_trips:
+            print(trip)
+            trip_expense_cost = calculate_trip_expense(trip)
+            totalExpense_Cost = trip_expense_cost
+            for expense in trip.expenses:
+                print(expense)
+                totalExpense_Cost +=expense.spent_amount
+            print(f"totalExpense_Cost:{totalExpense_Cost}")
+        return totalExpense_Cost
+
+
+    # #calculating total_expense using user_name
+    # user_name = 'GV'
+    # user = session.query(User).filter_by(user_name=user_name).first()
+    # if user:
+    #     user_id = user.user_id
+    #     total_expense = calculate_total_user_expense(user_id)
+    #     print(f"Total Expense for {user_name} : {total_expense}")   
