@@ -20,7 +20,7 @@ if __name__ == '__main__':
     session.query(Expense).delete()
     print("starting seed populates")
     session.commit()
-insert seed data
+#insert seed data
     names = ['Ganes', 'Mauli', 'Heshu', 'Indu', 'krish', 'Sundar', 'Rahman', 'Raja', 'GV', 'Ramya', 'Simma','Sachin']
     emails = ['gane@gmail.com','maUli@yahoo.com', 'Heshu@Yahoo.com', 'Gundu@Hotmail.com', 'Krish@Gmail.com', 'Sundae@gmail.com', 'rahman@raway.com','raja@ymail.com','gv@tamilan.com','ramy@ram.com','simma@gaho.com','sachin@gmail.com']
     phones = ['2318587894', '7414741474', '5588559898','8787878788', '9969658749', '8548785469','7878555544','8585777777', '7523232314', '4455787878','2255888888','7878999999']
@@ -37,3 +37,21 @@ insert seed data
         session.add(user)
         users.append(user)
     session.commit()
+    
+
+    #import ipdb; ipdb.set_trace()
+    session.close()
+    #test
+    # user1 = session.query(User).first()
+    # print(user1)
+    # users = session.query(User).all()
+    # print(users)
+    # user5 = session.query(User).filter_by(user_name = 'Heshu').all()
+    # print(user5)
+    # user6 = session.query(User).filter(User.user_name.ilike('%i%')).all()
+    # print(user6)
+    # i='sun'
+    # userf = session.query(User).filter(User.user_name.like('%{}%'.format(i))).all()
+    # print(userf)
+    # user8 = session.query(User).filter(User.user_id >5).all()
+    # print(user8)
