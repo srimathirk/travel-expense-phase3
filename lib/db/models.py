@@ -45,3 +45,17 @@ class Trip(Base):
             + f"To {self.end_place}" \
             + f"Gas_price {self.avg_gas_price}" \
             + f"MPG {self.fuel_efficiency_mpg}"
+    
+#Expense class(table)
+class Expense(Base):
+    __tablename__='expenses'
+    expense_id = Column(Integer(),primary_key=True)
+    trip_id = Column(Integer(),ForeignKey('trips.trip_id'))
+    expense_type = Column(String())
+    spent_amount = Column(Float())
+    
+    trip = relationship('Trip',back_populates='expenses')
+    def __repr__(self):
+        return f"Expense {self.expense_id}: " \
+            + f"Type {self.expense_type}, " \
+            + f"Amount_spent {self.spent_amount}"
