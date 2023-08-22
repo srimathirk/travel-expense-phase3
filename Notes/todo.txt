@@ -1,0 +1,9 @@
+[ ] create db diagrams
+[ ] create tables and their relationships in sqlalchemy
+[ ] create seed file populate in seed.py
+[ ] test database
+[ ] create Userstory that describe functionality
+[ ] work on methods/functionality
+[ ] work on cli.py and give inputs and get outputs
+[ ] use debug to get correct results
+[ ] do more testing
