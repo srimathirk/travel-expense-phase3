@@ -92,3 +92,13 @@ if __name__ == '__main__':
     # print(userf)
     # user8 = session.query(User).filter(User.user_id >5).all()
     # print(user8)
+    # testing trips
+    #getting trip details with userid
+    # user_trips = session.query(Trip).filter_by(user_id=6).all()
+    # print(user_trips) 
+    #getting trip details by username
+    # user_trips = session.query(Trip).join(User).filter(User.user_name=='Sundar').all()
+    # print(user_trips)
+    #filtering trip and user based on mileage
+    # user_trip1 = session.query(Trip,User).join(User).filter(Trip.fuel_efficiency_mpg < 50).all()
+    # print(user_trip1)

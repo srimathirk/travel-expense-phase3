@@ -23,10 +23,10 @@ class User(Base):
     trips = relationship("Trip", back_populates='user')
     def __repr__(self):
         return f"User {self.user_id}: " \
-            + f"Name {self.user_name}, " \
-            + f"Email {self.mail_id}" \
-            + f"Phone {self.phone_no}" \
-            + f"at {self.created_at}"
+            + f" Name {self.user_name}, " \
+            + f" Email {self.mail_id}" \
+            + f" Phone {self.phone_no}" \
+            + f" at {self.created_at}"
 #Trip class(table)
 class Trip(Base):
     __tablename__ = 'trips'
@@ -41,10 +41,10 @@ class Trip(Base):
     user = relationship('User', back_populates='trips')
     def __repr__(self):
         return f"Trip {self.trip_id}: " \
-            + f"From {self.start_place}, " \
-            + f"To {self.end_place}" \
-            + f"Gas_price {self.avg_gas_price}" \
-            + f"MPG {self.fuel_efficiency_mpg}"
+            + f" From {self.start_place}, " \
+            + f" To {self.end_place}" \
+            + f" Gas_price {self.avg_gas_price}" \
+            + f" MPG {self.fuel_efficiency_mpg}"
     
 #Expense class(table)
 class Expense(Base):
@@ -56,6 +56,6 @@ class Expense(Base):
     
     trip = relationship('Trip',back_populates='expenses')
     def __repr__(self):
-        return f"Expense {self.expense_id}: " \
-            + f"Type {self.expense_type}, " \
-            + f"Amount_spent {self.spent_amount}"
+        return f" Expense {self.expense_id}: " \
+            + f" Type {self.expense_type}, " \
+            + f" Amount_spent {self.spent_amount}"
