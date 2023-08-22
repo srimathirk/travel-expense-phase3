@@ -112,12 +112,39 @@ if __name__ == '__main__':
         print(f"distance: {distance_miles:.2f}", f"time: {estimated_travel_time_hours:.2f}")
         
         return distance_miles
-    
 
-
-
-
-    
+    #insert expense data
+    expense_data = [
+        (1,'Food',55),(1,'Accomodation',240),(1,'Parking',50),
+        (2,'Food',60),(2,'Parking',50),(2,'Entrance',70),
+        (3,'Beverages',32),(3,'Accomodation',150),
+        (4,'MuseumTickets', 50),(4,'Souvenirs',60),(4,'Parking',60),
+        (5,'Food',60),(5,'Accomodation',155),
+        (6,'Parking',20),(6,'Souvenirs',60),(6,'Food',30),
+        (7,'ThemePark',100),
+        (8,'Parking',20),(8,'Food',40),
+        (9,'MuseumTickets',50),(9,'Accomodation',100),
+        (10,'Parking',20),(10,'ThemePark',75),(10,'Food',60),
+        (11,'Food',50),
+        (12,'ThemePark',70),(12,'Accomodation',120),(12,'Food',30),
+        (13,'Accomodation',120),(13,'Souvenirs',150),
+        (14,'MuseumTickets',60),(14,'Parking',50),(14,'Food',20),
+        (15,'Food',60),(15,'Accomodation',120),
+        (16,'Accomodation',150),(16,'Food',100),(16,'Parking',50),
+        (17,'Parking',20),(17,'Food',150),
+        (18,'Accomodation',160)
+    ]    
+    #seed data
+    expenses=[]
+    for trip_id,expense_type,spent_amount in expense_data:
+        expense = Expense(
+            trip_id=trip_id,
+            expense_type=expense_type,
+            spent_amount=spent_amount
+        )
+        session.add(expense)
+        expenses.append(expense)
+    session.commit()   
     
     
     
