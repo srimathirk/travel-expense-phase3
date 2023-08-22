@@ -27,3 +27,21 @@ class User(Base):
             + f"Email {self.mail_id}" \
             + f"Phone {self.phone_no}" \
             + f"at {self.created_at}"
+#Trip class(table)
+class Trip(Base):
+    __tablename__ = 'trips'
+    trip_id = Column(Integer(),primary_key=True)
+    start_place = Column(String())
+    end_place = Column(String())
+    avg_gas_price = Column(Float())
+    fuel_efficiency_mpg = Column(Integer())
+    user_id = Column(Integer(),ForeignKey('users.user_id'))
+    
+    expenses = relationship('Expense', back_populates='trip')
+    user = relationship('User', back_populates='trips')
+    def __repr__(self):
+        return f"Trip {self.trip_id}: " \
+            + f"From {self.start_place}, " \
+            + f"To {self.end_place}" \
+            + f"Gas_price {self.avg_gas_price}" \
+            + f"MPG {self.fuel_efficiency_mpg}"
