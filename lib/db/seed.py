@@ -4,6 +4,12 @@ from sqlalchemy.orm import sessionmaker
 from models import User, Trip, Expense
 import random
 from datetime import datetime
+from geopy.geocoders import Nominatim
+from geopy.distance import geodesic
+from geopy.exc import GeocoderTimedOut
+import time
+
+
 
 if __name__ == '__main__':
     #databasse connection
@@ -43,7 +49,7 @@ if __name__ == '__main__':
     trip_datas = [
         ('Princeton, New Jersey','Philadelphia',3.82,50,5),
         ('Catskills, New York','Lexington, Massachusetts',4.75,45,4),
-        ('Finger Lakes, New York', 'Alexandria, Virginia',4.58,60,2),
+        ('New York City, NY', 'Los Angeles, CA',4.58,60,2),
         ('Westerly, Rhode Island','Cape May, New Jersey',3.64,50,1),
         ('Devils Tower, Wyoming','Niagara Falls',4.11,45,3),
         ('Philadelphia','Southampton Beach, Long Island',4.11,55,5),
@@ -74,7 +80,65 @@ if __name__ == '__main__':
         trips.append(trip)
     #commiting change
     session.commit()
+    #geolocator = Nominatim(user_agent="my_app")
+    def geocode_with_retry(geolocator, location):
+        max_attempts = 3
+        for attempt in range(max_attempts):
+            try:
+                return geolocator.geocode(location)
+            except GeocoderTimedOut:
+                if attempt < max_attempts - 1:
+                    print("Service timed out. Retrying...")
+                    time.sleep(2 ** attempt)  # Exponential backoff
+                else:
+                    raise
 
+
+    #start_place = "New York, NY"
+    #end_place = "Los Angeles, CA"
+    def calculating_distance(start_place, end_place):
+        # Initialize the Nominatim geocoder (nominatim in locator finds coordinates of places)
+        geolocator = Nominatim(user_agent = "calculate_distance")
+        # get coordinates for start_place and destination_place
+        #start = geolocator.geocode(start_place)
+        #end = geolocator.geocode(end_place)
+        start_coordinates = geocode_with_retry(geolocator, start_place)
+        end_coordinates = geocode_with_retry(geolocator, end_place)
+        #calculating distance in miles from coordinates (geodesic gives distance from coordinates)
+        distance_miles = geodesic((start_coordinates.latitude,start_coordinates.longitude),(end_coordinates.latitude,end_coordinates.longitude)).miles
+        # Assuming an average travel speed of 60 mph
+        estimated_travel_time_hours = distance_miles / 60
+
+        print(f"distance: {distance_miles:.2f}", f"time: {estimated_travel_time_hours:.2f}")
+        
+        return distance_miles
+    
+
+
+
+
+    
+    
+    
+    
+    # geolocator = Nominatim(user_agent="my_app")
+    # def geocode_retry(location):
+    #     max_attempts = 3
+    #     for attempt in range(max_attempts):
+    #         try:
+    #             return geolocator.geocode(location)
+    #         except GeocoderTimedOut:
+    #             if attempt < max_attempts -1:
+    #                 print ("service time out, retry")
+    #                 time.sleep(2 ** attempt)
+    #             else:
+    #                 raise
+    # # Provide the location
+    # location = "New York, NY"
+    # # Get the coordinates (latitude and longitude) for the location with retries
+    # coords = geocode_retry(location)
+    # # Print the coordinates
+    # print(f"Coordinates for {location}: Latitude {coords.latitude}, Longitude {coords.longitude}")
 
     #import ipdb; ipdb.set_trace()
     session.close()
@@ -102,3 +166,30 @@ if __name__ == '__main__':
     #filtering trip and user based on mileage
     # user_trip1 = session.query(Trip,User).join(User).filter(Trip.fuel_efficiency_mpg < 50).all()
     # print(user_trip1)
+    # trip = session.query(Trip).filter_by(trip_id = 3).first()
+    # if trip:
+    #     start_place = trip.start_place
+    #     end_place = trip.end_place
+    #     distance = calculating_distance(start_place,end_place)
+    #     print(f"Distance: {distance:.2f}miles ")
+    # calculating total expense by using username associated with trip
+    # trip = session.query(Trip,User).join(User).filter(User.user_name == 'Heshu').first()
+    # if trip:
+    #     start_place = trip.Trip.start_place
+    #     end_place = trip.Trip.end_place
+    #     distance_miles = calculating_distance(start_place, end_place)
+        
+    #     gallons = distance_miles / (trip.Trip.fuel_efficiency_mpg )
+    #     trip_expense_cost = gallons * trip.Trip.avg_gas_price
+    #     print(f"trip expense: {trip_expense_cost:.2f}")
+
+    # trip,user_agent = session.query(Trip,User).filter(User.user_name == 'Heshu').first()
+        
+    # if trip and user:
+    #     start_place = trip.start_place
+    #     end_place = trip.end_place
+    #     distance_miles = calculating_distance(start_place, end_place)
+        
+    #     gallons = distance_miles / (trip.fuel_efficiency_mpg or 1)
+    #     trip_expense_cost = gallons * trip.avg_gas_price
+    #     print(trip_expense_cost)
