@@ -16,7 +16,7 @@ if __name__ == '__main__':
     engine = create_engine('sqlite:///travel_records.db')
     #Base.metadata.create_all(engine)
 
-    #create a session
+    #create a session 
     Session = sessionmaker(bind=engine)
     session = Session()
 
