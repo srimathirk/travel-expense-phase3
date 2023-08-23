@@ -131,11 +131,13 @@ def updating_tripdetails(user_name,update_type,update_value):
         else:
             print("Trip not found")
 def deleting_trip(user_name):
-    deleting_trip = session.query(User).filter_by(user_name = user_name).first()
-    if deleting_trip:
-        session.delete(deleting_trip)
-        session.commit()
-        print(f"user deleted: {deleting_trip}")
-    else:
-        print("user not found")
+    deleting_trip = session.query(Trip).join(User).filter(User.user_name==user_name).all()
+    for deltrip in deleting_trip:
+        #print(trip)
+        if deltrip:
+            session.delete(deltrip)
+            session.commit()
+            print(f"trip deleted: {deltrip}")
+        else:
+            print("trip not found")
 

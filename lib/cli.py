@@ -1,5 +1,5 @@
 from helpers import user_exists, get_user, saving_userdetails_db,displaying_user,updating_userdetails,deleting_user
-from helpers import trip_exists, displaying_trips,get_trip,saving_tripdetails_db,get_user_id,updating_tripdetails
+from helpers import trip_exists, displaying_trips,get_trip,saving_tripdetails_db,get_user_id,updating_tripdetails,deleting_trip
 from header import welcome
 
 def main():
@@ -61,6 +61,15 @@ def main():
         elif update == 'no':
             print("Going back to main menu")
             break
-    
+    while True:
+        delete = input("Do you want to delete Trip details? (yes/no)").lower()
+        if delete == 'yes':
+            deleting_trip(user_name)
+            print("Trip deleted from database going back to main menu")
+            break
+        elif delete == 'no':
+            print("Back to main menu")
+            break
+
 if __name__=="__main__":        
     main()
