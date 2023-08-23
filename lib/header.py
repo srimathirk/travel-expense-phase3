@@ -2,7 +2,7 @@ from prettycli import red,yellow
 
 
 def welcome():
-    print(red("Welcome to"))
+    #print(red("Welcome to"))
     print(
         yellow(
             """
