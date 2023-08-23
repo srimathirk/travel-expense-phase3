@@ -12,8 +12,8 @@ session = Session()
 
 def get_user():
     user_name = input("Enter user name: ")
-    email = input("Enter email: ")
-    phone = input("Enter phone number: ")
+    mail_id = input("Enter email: ")
+    phone_no = input("Enter phone number: ")
     return user_name, mail_id,phone_no
 def user_exists(user_name):
     user = session.query(User).filter_by(user_name = user_name).first()
@@ -35,7 +35,7 @@ def updating_userdetails(user_name,update_type,update_value):
         elif update_type == "phone_no":
             updating_user.phone_no = update_value
             session.commit()
-            print("User details updated" updating_user)
+            print(f"User details updated: {updating_user}")
             return updating_user
     else:
         print("user not found")
@@ -44,7 +44,7 @@ def deleting_user(user_name):
     if deleting_user:
         session.delete(deleting_user)
         session.commit()
-        print("user deleted" deleting_user)
+        print(f"user deleted: {deleting_user}")
     else:
         print("user not found")
 def displaying_user(user_name):
