@@ -21,11 +21,11 @@ if __name__ == '__main__':
     session = Session()
 
 #deleting old populated seed to make sure everything works fine
-    #session.query(User).delete()
-    #session.query(Trip).delete()
-    #session.query(Expense).delete()
-    #print("starting seed populates")
-    #session.commit()
+    session.query(User).delete()
+    session.query(Trip).delete()
+    session.query(Expense).delete()
+    print("starting seed populates")
+    session.commit()
 #insert user data
     names = ['Ganes', 'Mauli', 'Heshu', 'Indu', 'krish', 'Sundar', 'Rahman', 'Raja', 'GV', 'Ramya', 'Simma','Sachin']
     emails = ['gane@gmail.com','maUli@yahoo.com', 'Heshu@Yahoo.com', 'Gundu@Hotmail.com', 'Krish@Gmail.com', 'Sundae@gmail.com', 'rahman@raway.com','raja@ymail.com','gv@tamilan.com','ramy@ram.com','simma@gaho.com','sachin@gmail.com']
@@ -188,8 +188,8 @@ if __name__ == '__main__':
     # user_trips = session.query(Trip).filter_by(user_id=6).all()
     # print(user_trips) 
     #getting trip details by username
-    # user_trips = session.query(Trip).join(User).filter(User.user_name=='Sundar').all()
-    # print(user_trips)
+    user_trips = session.query(Trip).join(User).filter(User.user_name=='Sundar').all()
+    print(user_trips)
     #filtering trip and user based on mileage
     # user_trip1 = session.query(Trip,User).join(User).filter(Trip.fuel_efficiency_mpg < 50).all()
     # print(user_trip1)

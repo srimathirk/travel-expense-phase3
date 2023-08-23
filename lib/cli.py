@@ -1,11 +1,12 @@
 from helpers import user_exists, get_user, saving_userdetails_db,displaying_user,updating_userdetails,deleting_user
+from helpers import trip_exists, displaying_trips,get_trip,saving_tripdetails_db,get_user_id
 from header import welcome
 
 def main():
     
     welcome()
     print("Welcome to Travel expense calculating app!!")
-    user_name = input("Enter user name, checking if user exists already ")
+    user_name = input("Enter user name, checking if user exists already ")  #adding user CRUD
     if user_exists(user_name):
         print(f"User already exists ")
         displaying_user(user_name)
@@ -18,8 +19,8 @@ def main():
     while True:
         update = input("Do you want to update User details? (yes/no)").lower()
         if update == 'yes':
-            update_type = input("Do you want to update (mail_id/phone_no): ").lower()
-            if update_type in ["mail_id","phone_no"]:
+            update_type = input("Do you want to update (mail/phone): ").lower()
+            if update_type in ["mail","phone"]:
                 update_value = input(f"Enter new {update_type}: ")
                 updating_userdetails(user_name,update_type,update_value)
             else:
@@ -36,11 +37,18 @@ def main():
         elif delete == 'no':
             print("Back to main menu")
             break
-    user_name = int(input("Enter user Name associated with the trip: "))
+    user_name = input("Enter user Name associated with the trip: ")   #adding Trips CRUD
     print("Checking if trip details exists already: ")
     if trip_exists(user_name):
         print(f"Trips already exists associated with {user_name} in database. ")
-        desplaying_trips(user_name)
-
+        displaying_trips(user_name)
+    else:
+        print("No trips exist with this user. add new trip details")
+        start_place,end_place,avg_gas_price,fuel_efficiency_mpg = get_trip()
+        user_id = get_user_id(user_name)
+        saving_tripdetails_db(start_place,end_place,avg_gas_price,fuel_efficiency_mpg,user_id)
+        print("trip details saved")
+        displaying_trips(user_name)
+    
 if __name__=="__main__":        
     main()

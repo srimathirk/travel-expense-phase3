@@ -10,6 +10,7 @@ engine= create_engine("sqlite:///db/travel_records.db")
 Session = sessionmaker(bind=engine)
 session = Session()
 
+#CRUD operation on User details
 def get_user():
     user_name = input("Enter user name: ")
     mail_id = input("Enter email: ")
@@ -59,3 +60,56 @@ def displaying_user(user_name):
         print(f"User created at: {displaying_user.created_at}")
     else:
         print("User not found")
+
+#CRUD operation on Trips details with associated User
+def trip_exists(user_id):
+    trips = session.query(Trip).filter_by(user_id=6).all()
+    return trips
+
+def trip_exists(user_name):
+    trips = session.query(Trip).join(User).filter(User.user_name == user_name).all()
+    for trip in trips:
+        #print(trip)
+        return trip
+    #print(trips)
+    #return trips
+
+def displaying_trips(user_name):
+    displaying_trips = session.query(Trip).join(User).filter(User.user_name==user_name).all()
+    for trip in displaying_trips:
+        #print(trip)
+        if trip:
+        #session.display(displaying_user)
+            print("Trip details: ")
+            print(f"Trip id: {trip.trip_id}")
+            print(f"Start Place: {trip.start_place}")
+            print(f"Destination place: {trip.end_place}")
+            print(f"gas price: {trip.avg_gas_price}")
+            print(f"Fuel efficiency: {trip.fuel_efficiency_mpg}")
+            print(f"User id: {trip.user_id}")
+        else:
+            print("User not found")
+
+def get_trip():
+    start_place = input("Enter start place: ")
+    end_place = input("Enter destination place: ")
+    avg_gas_price = float(input("Enter gas cost: "))
+    fuel_efficiency_mpg = float(input("Enter miles per gallon: "))
+    return start_place,end_place,avg_gas_price,fuel_efficiency_mpg
+def saving_tripdetails_db(start_place,end_place,avg_gas_price,fuel_efficiency_mpg,user_id):
+    new_trip = Trip(
+        start_place = start_place,
+        end_place = end_place,
+        avg_gas_price = avg_gas_price,
+        fuel_efficiency_mpg =fuel_efficiency_mpg,
+        user_id = user_id
+    )
+    session.add(new_trip)
+    session.commit()
+def get_user_id(user_name):
+    user = session.query(User).filter(User.user_name == user_name).first()
+    if user:
+        return user.user_id
+    else:
+        return None
+trip_exists("Sundar")
