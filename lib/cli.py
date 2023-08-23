@@ -1,5 +1,5 @@
 from helpers import user_exists, get_user, saving_userdetails_db,displaying_user,updating_userdetails,deleting_user
-from helpers import trip_exists, displaying_trips,get_trip,saving_tripdetails_db,get_user_id
+from helpers import trip_exists, displaying_trips,get_trip,saving_tripdetails_db,get_user_id,updating_tripdetails
 from header import welcome
 
 def main():
@@ -49,6 +49,18 @@ def main():
         saving_tripdetails_db(start_place,end_place,avg_gas_price,fuel_efficiency_mpg,user_id)
         print("trip details saved")
         displaying_trips(user_name)
+    while True:
+        update = input("Do you want to update Trip details? (yes/no)").lower()
+        if update == 'yes':
+            update_type = input("Do you want to update (startplace/endplace/gascost/mpg): ").lower()
+            if update_type in ["startplace","endplace","gascost","mpg"]:
+                update_value = input(f"Enter new {update_type}: ")
+                updating_tripdetails(user_name,update_type,update_value)
+            else:
+                print("Invalid option")
+        elif update == 'no':
+            print("Going back to main menu")
+            break
     
 if __name__=="__main__":        
     main()
