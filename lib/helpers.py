@@ -52,10 +52,10 @@ def displaying_user(user_name):
     if displaying_user:
         #session.display(displaying_user)
         print("User details: ")
-        print(f"User id: {User.user_id}")
-        print(f"User name: {User.user_name}")
-        print(f"User email: {User.mail_id}")
-        print(f"User phone: {User.phone_no}")
-        print(f"User created at: {User.created_at}")
+        print(f"User id: {displaying_user.user_id}")
+        print(f"User name: {displaying_user.user_name}")
+        print(f"User email: {displaying_user.mail_id}")
+        print(f"User phone: {displaying_user.phone_no}")
+        print(f"User created at: {displaying_user.created_at}")
     else:
         print("User not found")
