@@ -138,4 +138,26 @@ def deleting_trip(user_name,startplace,endplace):
         print(f"trip deleted: {deltrip}")
     else:
         print("trip not found")
+def expense_exists(user_name):
+    user = session.query(User).filter(User.user_name == user_name).first()
+    if user:
+        return session.query(Expense).join(Trip).filter(Trip.user_id == user.user_id).all()
+    return False
+def displaying_expenses(user_name):
+    user = session.query(User).filter(User.user_name == user_name).first()
+    if user:
+        trips = session.query(Trip).filter(Trip.user_id == user.user_id).all()
+        if trips:
+            for trip in trips:
+                print(f"Trip: {trip}")
+                expenses = session.query(Expense).filter(Expense.trip_id == trip.trip_id).all()
+                if expenses:
+                    #print(f"expenses:{expenses}")
+                    for expense in expenses:
+                        print(f"(expense: {expense})")
+                else:
+                    print("no expense found")
+        else:
+            print("no trip found")
+
 

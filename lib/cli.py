@@ -1,5 +1,6 @@
 from helpers import user_exists, get_user, saving_userdetails_db,displaying_user,updating_userdetails,deleting_user
 from helpers import trip_exists, displaying_trips,get_trip,saving_tripdetails_db,get_user_id,updating_tripdetails,deleting_trip
+from helpers import expense_exists, displaying_expenses
 from header import welcome
 
 def main():
@@ -81,5 +82,19 @@ def main():
             print("Back to main menu")
             break
 
+    user_name = input("Enter user Name associated with the expense: ")   #adding Expenses CRUD
+    print("Checking if expense details exists already: ")
+    if expense_exists(user_name):
+        print(f"Expenses already exists associated with {user_name} in database. ")
+        displaying_expenses(user_name)
+        # add = input("Do you want to add more expenses? (yes/no)").lower()
+        # if add == 'yes':
+        #     start_place,end_place,avg_gas_price,fuel_efficiency_mpg = get_expense()
+        #     user_id = get_trip_id(user_name)
+        #     saving_expensedetails(start_place,end_place,avg_gas_price,fuel_efficiency_mpg,user_id)
+        #     print("expense details saved")
+        # elif add == 'no':
+        #     print("going back to main menu")
+    
 if __name__=="__main__":        
     main()
