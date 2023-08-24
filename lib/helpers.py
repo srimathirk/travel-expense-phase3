@@ -159,5 +159,24 @@ def displaying_expenses(user_name):
                     print("no expense found")
         else:
             print("no trip found")
+def get_expense():
+    expense_type = input("Enter expense category: ")
+    spent_amount = float(input("Enter expense amount: "))
+    return expense_type, spent_amount 
+def get_trip_id(user_name):
+    trip = session.query(Trip).join(User).filter(Trip.user_id == User.user_id, User.user_name == user_name).first()
+    if trip:
+        return trip.trip_id
+    else:
+        return None
+def saving_expensedetails(expense_type,spent_amount,trip_id):
+    new_expense = Expense(
+        expense_type = expense_type,
+        spent_amount = spent_amount,
+        trip_id = trip_id
+    )
+    session.add(new_expense)
+    session.commit()
+        
 
 
