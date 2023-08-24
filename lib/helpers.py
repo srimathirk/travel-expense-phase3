@@ -179,6 +179,24 @@ def saving_expensedetails(expense_type,spent_amount,trip_id):
     )
     session.add(new_expense)
     session.commit()
-        
+def get_expense_id(user_name):
+    expenses = session.query(Expense.expense_id).join(Trip).join(User).filter(User.user_name == user_name).all()
+    for expense in expenses:
+        while True:
+            if expense:
+                return expense.expense_id
+            else:
+                return None
 
+def updating_expensedetails(expense_id,update_type,update_value):
+    expense = session.query(Expense).filter_by(expense_id=expense_id).first()
+    if expense:
+        if update_type == "category":
+            expense.expense_type = update_value
+        elif update_type == "amount":
+            expense.spent_amount = float(update_value)
+        session.commit()
+        print("Expense details updated.")
+    else:
+        print("Expense not found.")
 

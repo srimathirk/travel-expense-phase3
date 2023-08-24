@@ -1,6 +1,6 @@
 from helpers import user_exists, get_user, saving_userdetails_db,displaying_user,updating_userdetails,deleting_user
 from helpers import trip_exists, displaying_trips,get_trip,saving_tripdetails_db,get_user_id,updating_tripdetails,deleting_trip
-from helpers import expense_exists, displaying_expenses,get_trip_id,get_expense,saving_expensedetails
+from helpers import expense_exists, displaying_expenses,get_trip_id,get_expense,saving_expensedetails,get_expense_id,updating_expensedetails
 from header import welcome
 
 def main():
@@ -63,7 +63,7 @@ def main():
         trip_id = get_trip_id(user_name)
         #trip_id = int(input("Enter trip_id to update"))
         if update == 'yes':
-            trip_id = int(input("Enter trip_id to update"))
+            trip_id = int(input("Enter trip_id to update: "))
             update_type = input("Do you want to update (startplace/endplace/gascost/mpg): ").lower()
             if update_type in ["startplace","endplace","gascost","mpg"]:
                 update_value = input(f"Enter new {update_type}: ")
@@ -109,5 +109,21 @@ def main():
         print("expense details saved")
         displaying_expenses(user_name)
 
+    while True:
+        update = input("Do you want to update Expense details? (yes/no)").lower()
+        expense_id = get_expense_id(user_name)
+        #trip_id = int(input("Enter trip_id to update"))
+        if update == 'yes':
+            trip_id = int(input("Enter trip_id to update: "))
+            expense_id = int(input("Enter expense_id to update: "))
+            update_type = input("Do you want to update (category/amount): ").lower()
+            if update_type in ["category","amount"]:
+                update_value = input(f"Enter new {update_type}: ")
+                updating_expensedetails(expense_id,update_type,update_value)
+            else:
+                print("Invalid option")
+        elif update == 'no':
+            print("Going back to main menu")
+            break
 if __name__=="__main__":        
     main()
