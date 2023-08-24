@@ -42,6 +42,14 @@ def main():
     if trip_exists(user_name):
         print(f"Trips already exists associated with {user_name} in database. ")
         displaying_trips(user_name)
+        add = input("Do you want to add more trips? (yes/no)").lower()
+        if add == 'yes':
+            start_place,end_place,avg_gas_price,fuel_efficiency_mpg = get_trip()
+            user_id = get_user_id(user_name)
+            saving_tripdetails_db(start_place,end_place,avg_gas_price,fuel_efficiency_mpg,user_id)
+            print("trip details saved")
+        elif add == 'no':
+            print("going back to main menu")
     else:
         print("No trips exist with this user. add new trip details")
         start_place,end_place,avg_gas_price,fuel_efficiency_mpg = get_trip()
@@ -64,7 +72,9 @@ def main():
     while True:
         delete = input("Do you want to delete Trip details? (yes/no)").lower()
         if delete == 'yes':
-            deleting_trip(user_name)
+            startplace = input("Enter start place for trip to delete: ")
+            endplace = input("Enter end place for trip to delete: ")
+            deleting_trip(user_name, startplace, endplace)
             print("Trip deleted from database going back to main menu")
             break
         elif delete == 'no':
