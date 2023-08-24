@@ -164,11 +164,13 @@ def get_expense():
     spent_amount = float(input("Enter expense amount: "))
     return expense_type, spent_amount 
 def get_trip_id(user_name):
-    trip = session.query(Trip).join(User).filter(Trip.user_id == User.user_id, User.user_name == user_name).first()
-    if trip:
-        return trip.trip_id
-    else:
-        return None
+    trips = session.query(Trip).join(User).filter(Trip.user_id == User.user_id, User.user_name == user_name).all()
+    for trip in trips:
+        while True:
+            if trip:
+                return trip.trip_id
+            else:
+                return None
 def saving_expensedetails(expense_type,spent_amount,trip_id):
     new_expense = Expense(
         expense_type = expense_type,

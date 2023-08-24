@@ -96,6 +96,13 @@ def main():
             displaying_expenses(user_name)
         elif add == 'no':
             print("going back to main menu")
-    
+    else:
+        print("no expense details found for this user")
+        expense_type,spent_amount = get_expense()
+        trip_id = get_trip_id(user_name)
+        saving_expensedetails(expense_type,spent_amount,trip_id)
+        print("expense details saved")
+        displaying_expenses(user_name)
+
 if __name__=="__main__":        
     main()
