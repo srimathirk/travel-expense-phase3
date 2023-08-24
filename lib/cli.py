@@ -60,11 +60,14 @@ def main():
         displaying_trips(user_name)
     while True:
         update = input("Do you want to update Trip details? (yes/no)").lower()
+        trip_id = get_trip_id(user_name)
+        #trip_id = int(input("Enter trip_id to update"))
         if update == 'yes':
+            trip_id = int(input("Enter trip_id to update"))
             update_type = input("Do you want to update (startplace/endplace/gascost/mpg): ").lower()
             if update_type in ["startplace","endplace","gascost","mpg"]:
                 update_value = input(f"Enter new {update_type}: ")
-                updating_tripdetails(user_name,update_type,update_value)
+                updating_tripdetails(trip_id,update_type,update_value)
             else:
                 print("Invalid option")
         elif update == 'no':
@@ -89,8 +92,10 @@ def main():
         displaying_expenses(user_name)
         add = input("Do you want to add more expenses? (yes/no)").lower()
         if add == 'yes':
-            expense_type,spent_amount = get_expense()
             trip_id = get_trip_id(user_name)
+            trip_id = int(input("Enter trip_id to update "))
+            expense_type,spent_amount = get_expense()
+            #trip_id = get_trip_id(user_name)
             saving_expensedetails(expense_type,spent_amount,trip_id)
             print("expense details saved")
             displaying_expenses(user_name)

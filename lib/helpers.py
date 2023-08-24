@@ -112,24 +112,24 @@ def get_user_id(user_name):
         return user.user_id
     else:
         return None
-def updating_tripdetails(user_name,update_type,update_value):
-    updating_trips = session.query(Trip).join(User).filter(User.user_name==user_name).all()
-    for trip in updating_trips:
+def updating_tripdetails(trip_id,update_type,update_value):
+    trip = session.query(Trip).filter_by(trip_id=trip_id).first()
+    #for trip in updating_trips:
         #print(trip)
-        if trip:
-            if update_type == "startplace":
-                trip.start_place = update_value
-            elif update_type == "endplace":
-                trip.end_place = update_value
-            elif update_type == "gascost":
-                trip.avg_gas_price = float(update_value)
-            elif update_type == "mpg":
-                trip.fuel_efficiency_mpg = int(update_value)
-            session.commit()
-            print(f"trip details updated: {trip} ")
-            return trip
-        else:
-            print("Trip not found")
+    if trip:
+        if update_type == "startplace":
+            trip.start_place = update_value
+        elif update_type == "endplace":
+            trip.end_place = update_value
+        elif update_type == "gascost":
+            trip.avg_gas_price = float(update_value)
+        elif update_type == "mpg":
+            trip.fuel_efficiency_mpg = int(update_value)
+        session.commit()
+        print(f"trip details updated: {trip} ")
+        return trip
+    else:
+        print("Trip not found")
 def deleting_trip(user_name,startplace,endplace):
     deltrip = session.query(Trip).join(User).filter(User.user_name==user_name, Trip.start_place == startplace, Trip.end_place == endplace).first()
     if deltrip:
