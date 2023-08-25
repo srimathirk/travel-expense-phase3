@@ -4,6 +4,7 @@ from datetime import datetime
 from geopy.geocoders import Nominatim
 from geopy.distance import geodesic
 from db.models import User, Trip, Expense #importing class from models.py
+from prettycli import red, blue, yellow,green
 
 #connecting database engine and setting up session
 engine= create_engine("sqlite:///db/travel_records.db")
@@ -189,18 +190,18 @@ def adding_expenses(user_name):
     expense_type,spent_amount = get_expense()
     trip_id = get_trip_id(user_name)
     saving_expensedetails(expense_type,spent_amount,trip_id)
-    print("expense details saved")
+    print(green("expense details saved"))
     displaying_expenses(user_name)
 def adding_more_expense(user_name):
     while True:
-        add = input("Do you want to add more expenses? (yes/no)").lower()
+        add = input(yellow("Do you want to add more expenses? (yes/no)")).lower()
         if add == 'yes':
             trip_id = get_trip_id(user_name)
             trip_id = int(input("Enter trip_id to add "))
             expense_type,spent_amount = get_expense()
             #trip_id = get_trip_id(user_name)
             saving_expensedetails(expense_type,spent_amount,trip_id)
-            print("expense details saved")
+            print(green("expense details saved"))
             displaying_expenses(user_name)
             clear_screen(1)
         elif add == 'no':
@@ -215,18 +216,18 @@ def updating_expensedetails(expense_id,update_type,update_value):
         elif update_type == "amount":
             expense.spent_amount = float(update_value)
         session.commit()
-        print("Expense details updated.")
+        print(green("Expense details updated."))
     else:
-        print("Expense not found.")
+        print(red("Expense not found."))
 
 def deleting_expense(expense_id):
     delexpense = session.query(Expense).filter(Expense.expense_id == expense_id).first()
     if delexpense:
         session.delete(delexpense)
         session.commit()
-        print("Expense deleted.")
+        print(red("Expense deleted."))
     else:
-        print("Expense not found.")
+        print(red("Expense not found."))
 
 def geocode_with_retry(geolocator, location):
         max_attempts = 10
@@ -259,7 +260,7 @@ def calculate_trip_expense(trip):
     distance_miles = calculating_distance(trip.start_place,trip.end_place)
     gallons = distance_miles / (trip.fuel_efficiency_mpg or 1)
     trip_expense_cost = gallons * trip.avg_gas_price
-    print(f"Trip expense cost {trip_expense_cost:.2f}$")
+    print(green(f"Trip expense cost {trip_expense_cost:.2f}$"))
     return trip_expense_cost
 
 def calculate_total_user_expense(user_id):
@@ -272,7 +273,7 @@ def calculate_total_user_expense(user_id):
         for expense in trip.expenses:
             print(expense)
             totalExpense_Cost +=expense.spent_amount
-        print(f"totalExpense_Cost for entire trip:{totalExpense_Cost:.2f}$")
+        print(green(f"totalExpense_Cost for entire trip:{totalExpense_Cost:.2f}$"))
     return totalExpense_Cost
 
 def calculate_total_expenses(user_name):
