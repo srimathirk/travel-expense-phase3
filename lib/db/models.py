@@ -1,6 +1,6 @@
 from sqlalchemy import create_engine, MetaData, func, ForeignKey
 from sqlalchemy import Column, Integer, String, Float, Table, DateTime
-from sqlalchemy.orm import relationship, declarative_base
+from sqlalchemy.orm import relationship, declarative_base, sessionmaker
 
 # to maintain consistency of database schema
 convention = {
@@ -10,6 +10,8 @@ metadata = MetaData(naming_convention=convention)
 Base=declarative_base(metadata=metadata)
 #database connection 
 engine = create_engine('sqlite:///travel_records.db')
+Session = sessionmaker(bind=engine)
+session = Session()
 
 #User class (table)
 class User(Base):
@@ -27,6 +29,13 @@ class User(Base):
             + f" Email {self.mail_id}" \
             + f" Phone {self.phone_no}" \
             + f" at {self.created_at}"
+
+    
+    # @classmethod
+    # def user_exists(cls,user_name):
+    #     user = session.query(cls).filter_by(user_name = user_name).first()
+    #     return user
+
 #Trip class(table)
 class Trip(Base):
     __tablename__ = 'trips'

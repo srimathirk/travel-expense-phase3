@@ -1,10 +1,11 @@
-from helpers import user_exists, get_user, saving_userdetails_db,displaying_user,updating_userdetails,deleting_user
+from helpers import  user_exists,get_user, saving_userdetails_db,displaying_user,updating_userdetails,deleting_user
 from helpers import trip_exists, displaying_trips,get_trip,saving_tripdetails_db,get_user_id,updating_tripdetails,deleting_trip
 from helpers import expense_exists, displaying_expenses,get_trip_id,get_expense,saving_expensedetails,get_expense_id,updating_expensedetails,deleting_expense
 from header import welcome
 from helpers import calculate_total_expenses,adding_expenses,adding_more_expense
 import time
 from simple_term_menu import TerminalMenu
+#from db.models import User
 def main():
     
     welcome()
@@ -21,7 +22,7 @@ def main():
         displaying_user(user_name)
     # print("Options: update, delete")
     # option = input("Choose an option: ").lower()
-    user_options = ["update","delete","exit"]
+    user_options = ["update","delete","continue to usertrips"]
     user_terminal_menu = TerminalMenu(user_options)
     user_entry_index = user_terminal_menu.show()
     print(f"You selected {user_options[user_entry_index]}!")
@@ -49,13 +50,13 @@ def main():
             elif delete == 'no':
                 print("Back to main menu")
                 break
-    elif selected_user_option == "exit":
+    elif selected_user_option == "continue to usertrips":
         print(f"Showing trip details for {user_name}")
     time.sleep(3)
     #user_name = input("Enter user Name associated with the trip: ")   #adding Trips CRUD
-    print("Checking if trip details exists already: ")
+    print(f"\n\nChecking if trip details exists already: ")
     if trip_exists(user_name):
-        print(f"Trips already exists associated with {user_name} in database. ")
+        print(f"\n\nTrips already exists associated with {user_name} in database. ")
         displaying_trips(user_name)
         add = input("Do you want to add more trips? (yes/no)").lower()
         if add == 'yes':
@@ -72,7 +73,7 @@ def main():
         saving_tripdetails_db(start_place,end_place,avg_gas_price,fuel_efficiency_mpg,user_id)
         print("trip details saved")
         displaying_trips(user_name)
-    trip_options = ["update","delete","exit"]
+    trip_options = ["update","delete","continue to expenses"]
     trip_menu = TerminalMenu(trip_options)
     trip_entry_index = trip_menu.show()
     print(f"You selected {trip_options[trip_entry_index]}!")
@@ -105,11 +106,11 @@ def main():
             elif delete == 'no':
                 print("Back to main menu")
                 break
-    elif selected_trip_option == "exit":
+    elif selected_trip_option == "continue to expenses":
         print(f"showing expense details associated with a Trip for {user_name}")
     time.sleep(3)
     #user_name = input("Enter user Name associated with the expense: ")   #adding Expenses CRUD
-    print("Checking if expense details exists already: ")
+    print(f"\n\n Checking if expense details exists already: ")
     if expense_exists(user_name):
         print(f"Expenses already exists associated with {user_name} in database. ")
         displaying_expenses(user_name)
