@@ -240,7 +240,12 @@ def calculating_distance(start_place, end_place):
     print(f"distance: {distance_miles:.2f}", f"time: {estimated_travel_time_hours:.2f}")
     
     return distance_miles
-
+def calculate_trip_expense(trip):
+    distance_miles = calculating_distance(trip.start_place,trip.end_place)
+    gallons = distance_miles / (trip.fuel_efficiency_mpg or 1)
+    trip_expense_cost = gallons * trip.avg_gas_price
+    print(trip_expense_cost)
+    return trip_expense_cost
 def calculating_trip_cost(user_name):
     trips = session.query(Trip,User).join(User).filter(User.user_name == user_name).all()
     for trip in trips:
@@ -253,3 +258,22 @@ def calculating_trip_cost(user_name):
             trip_expense_cost = gallons * trip.Trip.avg_gas_price
             print(f"trip expense: {trip_expense_cost:.2f}")
 
+def calculate_total_user_expense(user_id):
+    user_trips = session.query(Trip).filter_by(user_id=user_id).all()
+    totalExpense_Cost=0
+    for trip in user_trips:
+        print(trip)
+        trip_expense_cost = calculate_trip_expense(trip)
+        totalExpense_Cost = trip_expense_cost
+        for expense in trip.expenses:
+            print(expense)
+            totalExpense_Cost +=expense.spent_amount
+        print(f"totalExpense_Cost:{totalExpense_Cost}")
+    return totalExpense_Cost
+
+def calculate_total_expenses(user_name):
+    user = session.query(User).filter_by(user_name=user_name).first()
+    if user:
+        user_id = user.user_id
+        total_expense = calculate_total_user_expense(user_id)
+        print(f"Total Expense for {user_name} : {total_expense}")   

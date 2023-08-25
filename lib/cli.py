@@ -2,7 +2,7 @@ from helpers import user_exists, get_user, saving_userdetails_db,displaying_user
 from helpers import trip_exists, displaying_trips,get_trip,saving_tripdetails_db,get_user_id,updating_tripdetails,deleting_trip
 from helpers import expense_exists, displaying_expenses,get_trip_id,get_expense,saving_expensedetails,get_expense_id,updating_expensedetails,deleting_expense
 from header import welcome
-from helpers import calculating_trip_cost
+from helpers import calculating_trip_cost,calculate_total_expenses
 
 def main():
     
@@ -147,6 +147,8 @@ def main():
     #tripid = input("Enter tripid associated with user to calculate distance: ")
     print("Calculating total distance of trip: ")
     calculating_trip_cost(user_name)
+    print("Calculating total expenses cost for entire trip")
+    calculate_total_expenses(user_name)
 
 if __name__=="__main__":        
     main()
