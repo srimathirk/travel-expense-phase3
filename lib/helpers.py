@@ -202,9 +202,10 @@ def adding_more_expense(user_name):
             saving_expensedetails(expense_type,spent_amount,trip_id)
             print("expense details saved")
             displaying_expenses(user_name)
-            
+            clear_screen(1)
         elif add == 'no':
-            print("going back to main menu")
+            print("you selected no for adding expenses")
+            clear_screen(1)
             break
 def updating_expensedetails(expense_id,update_type,update_value):
     expense = session.query(Expense).filter_by(expense_id=expense_id).first()
@@ -280,3 +281,6 @@ def calculate_total_expenses(user_name):
         user_id = user.user_id
         total_expense = calculate_total_user_expense(user_id)
         #print(f"Total Expense for {user_name} : {total_expense}")   
+
+def clear_screen(lines):
+    print("\n" * lines)
