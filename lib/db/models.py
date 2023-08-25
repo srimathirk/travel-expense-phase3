@@ -29,13 +29,7 @@ class User(Base):
             + f" Email {self.mail_id}" \
             + f" Phone {self.phone_no}" \
             + f" at {self.created_at}"
-
-    
-    # @classmethod
-    # def user_exists(cls,user_name):
-    #     user = session.query(cls).filter_by(user_name = user_name).first()
-    #     return user
-
+   
 #Trip class(table)
 class Trip(Base):
     __tablename__ = 'trips'
