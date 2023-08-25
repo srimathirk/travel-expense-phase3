@@ -200,3 +200,56 @@ def updating_expensedetails(expense_id,update_type,update_value):
     else:
         print("Expense not found.")
 
+def deleting_expense(expense_id):
+    delexpense = session.query(Expense).filter(Expense.expense_id == expense_id).first()
+    if delexpense:
+        session.delete(delexpense)
+        session.commit()
+        print("Expense deleted.")
+    else:
+        print("Expense not found.")
+
+def geocode_with_retry(geolocator, location):
+        max_attempts = 3
+        for attempt in range(max_attempts):
+            try:
+                return geolocator.geocode(location)
+            except GeocoderTimedOut:
+                if attempt < max_attempts - 1:
+                    print("Service timed out. Retrying...")
+                    time.sleep(2 ** attempt)  # Exponential backoff
+                else:
+                    raise
+
+
+#start_place = "New York, NY"
+#end_place = "Los Angeles, CA"
+def calculating_distance(start_place, end_place):
+    # Initialize the Nominatim geocoder (nominatim in locator finds coordinates of places)
+    geolocator = Nominatim(user_agent = "calculate_distance")
+    # get coordinates for start_place and destination_place
+    #start = geolocator.geocode(start_place)
+    #end = geolocator.geocode(end_place)
+    start_coordinates = geocode_with_retry(geolocator, start_place)
+    end_coordinates = geocode_with_retry(geolocator, end_place)
+    #calculating distance in miles from coordinates (geodesic gives distance from coordinates)
+    distance_miles = geodesic((start_coordinates.latitude,start_coordinates.longitude),(end_coordinates.latitude,end_coordinates.longitude)).miles
+    # Assuming an average travel speed of 60 mph
+    estimated_travel_time_hours = distance_miles / 60
+
+    print(f"distance: {distance_miles:.2f}", f"time: {estimated_travel_time_hours:.2f}")
+    
+    return distance_miles
+
+def calculating_trip_cost(user_name):
+    trips = session.query(Trip,User).join(User).filter(User.user_name == user_name).all()
+    for trip in trips:
+        if trip:
+            start_place = trip.Trip.start_place
+            end_place = trip.Trip.end_place
+            distance_miles = calculating_distance(start_place, end_place)
+            
+            gallons = distance_miles / (trip.Trip.fuel_efficiency_mpg )
+            trip_expense_cost = gallons * trip.Trip.avg_gas_price
+            print(f"trip expense: {trip_expense_cost:.2f}")
+
