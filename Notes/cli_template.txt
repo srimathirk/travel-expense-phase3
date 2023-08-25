@@ -1,0 +1,65 @@
+Cli app template
+	✓	Travel expenses calculator 
+
+Enter username:
+Check if user exists already 
+If true :
+      Display user details 
+If false:
+       Enter name, phone,email
+       Save it to database 
+       Display user details 
+Want to update user?
+If yes:
+       Update phone/email
+If no: 
+        Go back main
+Want to delete user?
+If yes:
+       Delete user
+If no: 
+       Go back to main
+Check trip details associated with user
+If existing trip true:
+        Display trip details 
+Else:
+        Enter start, endplace, gas cost , mpg
+        Save it to database 
+        Display trip details 
+Want to update trip details?
+If yes:
+       Update trip details (start,end,gasprice,mpg)
+Else:
+      Go back to main
+Want to delete trips?
+If yes:
+      Delete trip
+Else: 
+      Go back to main 
+Check expense associated with user and their trips
+If yes:
+      Display expenses 
+Else:
+      Add new expenses (category,cost)
+      Save it to database 
+      Display expenses
+Want to update expenses?
+If yes:
+      Update expense
+Else:
+      Go back to main 
+Want to delete expenses?
+If yes: 
+      Delete expense 
+Else:
+      Go back to main 
+Calculate trip expense for user.username 
+       Calculate distance from start,end pl(miles)
+       Calculate gallons = distance/mpg
+      Calculate trip cost = gasprice * gallons 
+      Add trip cost with associated expenses from expense table
+     Total expense = trip cost + all expense associated with trip(food+acc+parking..)
+     Print( total expense for user in trip is total expense)
+
+      
+
