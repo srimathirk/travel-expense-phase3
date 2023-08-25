@@ -43,8 +43,8 @@ class Trip(Base):
         return f"Trip {self.trip_id}: " \
             + f" From {self.start_place}, " \
             + f" To {self.end_place}" \
-            + f" Gas_price {self.avg_gas_price}" \
-            + f" MPG {self.fuel_efficiency_mpg}"
+            + f" Gas_price {self.avg_gas_price}$" \
+            + f" MPG {self.fuel_efficiency_mpg}mpg"
     
 #Expense class(table)
 class Expense(Base):
@@ -58,4 +58,4 @@ class Expense(Base):
     def __repr__(self):
         return f" Expense {self.expense_id}: " \
             + f" Type {self.expense_type}, " \
-            + f" Amount_spent {self.spent_amount}"
+            + f" Amount_spent {self.spent_amount}$"

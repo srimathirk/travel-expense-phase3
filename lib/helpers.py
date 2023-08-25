@@ -114,8 +114,6 @@ def get_user_id(user_name):
         return None
 def updating_tripdetails(trip_id,update_type,update_value):
     trip = session.query(Trip).filter_by(trip_id=trip_id).first()
-    #for trip in updating_trips:
-        #print(trip)
     if trip:
         if update_type == "startplace":
             trip.start_place = update_value
@@ -187,7 +185,27 @@ def get_expense_id(user_name):
                 return expense.expense_id
             else:
                 return None
-
+def adding_expenses(user_name):
+    expense_type,spent_amount = get_expense()
+    trip_id = get_trip_id(user_name)
+    saving_expensedetails(expense_type,spent_amount,trip_id)
+    print("expense details saved")
+    displaying_expenses(user_name)
+def adding_more_expense(user_name):
+    while True:
+        add = input("Do you want to add more expenses? (yes/no)").lower()
+        if add == 'yes':
+            trip_id = get_trip_id(user_name)
+            trip_id = int(input("Enter trip_id to add "))
+            expense_type,spent_amount = get_expense()
+            #trip_id = get_trip_id(user_name)
+            saving_expensedetails(expense_type,spent_amount,trip_id)
+            print("expense details saved")
+            displaying_expenses(user_name)
+            
+        elif add == 'no':
+            print("going back to main menu")
+            break
 def updating_expensedetails(expense_id,update_type,update_value):
     expense = session.query(Expense).filter_by(expense_id=expense_id).first()
     if expense:
@@ -220,10 +238,6 @@ def geocode_with_retry(geolocator, location):
                     time.sleep(4 ** attempt)  # Exponential backoff
                 else:
                     raise
-
-
-#start_place = "New York, NY"
-#end_place = "Los Angeles, CA"
 def calculating_distance(start_place, end_place):
     # Initialize the Nominatim geocoder (nominatim in locator finds coordinates of places)
     geolocator = Nominatim(user_agent = "calculate_distance")
@@ -234,29 +248,18 @@ def calculating_distance(start_place, end_place):
     end_coordinates = geocode_with_retry(geolocator, end_place)
     #calculating distance in miles from coordinates (geodesic gives distance from coordinates)
     distance_miles = geodesic((start_coordinates.latitude,start_coordinates.longitude),(end_coordinates.latitude,end_coordinates.longitude)).miles
-    # Assuming an average travel speed of 60 mph
-    estimated_travel_time_hours = distance_miles / 60
+    # Assuming an average travel speed of 55 mph
+    estimated_travel_time_hours = distance_miles / 55
 
-    print(f"distance: {distance_miles:.2f}", f"time: {estimated_travel_time_hours:.2f}")
+    print(f"distance: {distance_miles:.2f}mi", f"time: {estimated_travel_time_hours:.2f}hrs")
     
     return distance_miles
 def calculate_trip_expense(trip):
     distance_miles = calculating_distance(trip.start_place,trip.end_place)
     gallons = distance_miles / (trip.fuel_efficiency_mpg or 1)
     trip_expense_cost = gallons * trip.avg_gas_price
-    print(trip_expense_cost)
+    print(f"Trip expense cost {trip_expense_cost:.2f}$")
     return trip_expense_cost
-def calculating_trip_cost(user_name):
-    trips = session.query(Trip,User).join(User).filter(User.user_name == user_name).all()
-    for trip in trips:
-        if trip:
-            start_place = trip.Trip.start_place
-            end_place = trip.Trip.end_place
-            distance_miles = calculating_distance(start_place, end_place)
-            
-            gallons = distance_miles / (trip.Trip.fuel_efficiency_mpg )
-            trip_expense_cost = gallons * trip.Trip.avg_gas_price
-            print(f"trip expense: {trip_expense_cost:.2f}")
 
 def calculate_total_user_expense(user_id):
     user_trips = session.query(Trip).filter_by(user_id=user_id).all()
@@ -268,7 +271,7 @@ def calculate_total_user_expense(user_id):
         for expense in trip.expenses:
             print(expense)
             totalExpense_Cost +=expense.spent_amount
-        print(f"totalExpense_Cost:{totalExpense_Cost}")
+        print(f"totalExpense_Cost for entire trip:{totalExpense_Cost:.2f}$")
     return totalExpense_Cost
 
 def calculate_total_expenses(user_name):
@@ -276,4 +279,4 @@ def calculate_total_expenses(user_name):
     if user:
         user_id = user.user_id
         total_expense = calculate_total_user_expense(user_id)
-        print(f"Total Expense for {user_name} : {total_expense}")   
+        #print(f"Total Expense for {user_name} : {total_expense}")   

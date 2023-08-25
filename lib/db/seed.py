@@ -59,7 +59,7 @@ if __name__ == '__main__':
         ('Moab, Utah', 'Camden, Maine',3.77,20,8),
         ('Austin, Texas','Zion National Park',3.60,30,9),
         ('Seneca Falls, New York','Princeton, New Jersey',4.05,20,12),
-        ('Southampton Beach, Long Island','Kent, Connecticut',5.5,25,11),
+        ('Long Island','Connecticut',5.5,25,11),
         ('Killington, Vermont','Big Sur, California',3.81,15,10),
         ('Hershey, Pennsylvania','Washington DC',3.99,20,8),
         ('Atlantic City, New Jersey','Hudson Valley, New York',4.54,25,9),

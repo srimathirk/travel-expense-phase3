@@ -2,7 +2,7 @@ from helpers import user_exists, get_user, saving_userdetails_db,displaying_user
 from helpers import trip_exists, displaying_trips,get_trip,saving_tripdetails_db,get_user_id,updating_tripdetails,deleting_trip
 from helpers import expense_exists, displaying_expenses,get_trip_id,get_expense,saving_expensedetails,get_expense_id,updating_expensedetails,deleting_expense
 from header import welcome
-from helpers import calculating_trip_cost,calculate_total_expenses
+from helpers import calculate_total_expenses,adding_expenses,adding_more_expense
 
 def main():
     
@@ -39,7 +39,7 @@ def main():
         elif delete == 'no':
             print("Back to main menu")
             break
-    user_name = input("Enter user Name associated with the trip: ")   #adding Trips CRUD
+    #user_name = input("Enter user Name associated with the trip: ")   #adding Trips CRUD
     print("Checking if trip details exists already: ")
     if trip_exists(user_name):
         print(f"Trips already exists associated with {user_name} in database. ")
@@ -86,33 +86,17 @@ def main():
             print("Back to main menu")
             break
 
-    user_name = input("Enter user Name associated with the expense: ")   #adding Expenses CRUD
+    #user_name = input("Enter user Name associated with the expense: ")   #adding Expenses CRUD
     print("Checking if expense details exists already: ")
     if expense_exists(user_name):
         print(f"Expenses already exists associated with {user_name} in database. ")
         displaying_expenses(user_name)
-        while True:
-            add = input("Do you want to add more expenses? (yes/no)").lower()
-            if add == 'yes':
-                trip_id = get_trip_id(user_name)
-                trip_id = int(input("Enter trip_id to add "))
-                expense_type,spent_amount = get_expense()
-                #trip_id = get_trip_id(user_name)
-                saving_expensedetails(expense_type,spent_amount,trip_id)
-                print("expense details saved")
-                displaying_expenses(user_name)
-                break
-            elif add == 'no':
-                print("going back to main menu")
-                break
+        adding_more_expense(user_name)
     else:
         print("no expense details found for this user")
-        expense_type,spent_amount = get_expense()
-        trip_id = get_trip_id(user_name)
-        saving_expensedetails(expense_type,spent_amount,trip_id)
-        print("expense details saved")
-        displaying_expenses(user_name)
-
+        adding_expenses(user_name)
+        #add = input("Do you want to add more expenses? (yes/no)").lower()
+        adding_more_expense(user_name)
     while True:
         update = input("Do you want to update Expense details? (yes/no)").lower()
         expense_id = get_expense_id(user_name)
@@ -142,13 +126,12 @@ def main():
             print("Back to main menu")
             break
     print("Calculating trip expense for username")
-    user_name =input("Enter username to display trip details: ")
+    #user_name =input("Enter username to display trip details: ")
     displaying_trips(user_name)
-    #tripid = input("Enter tripid associated with user to calculate distance: ")
-    print("Calculating total distance of trip: ")
-    calculating_trip_cost(user_name)
+    #print("Calculating total distance of trip: ")
+    #calculating_trip_cost(user_name)
     print("Calculating total expenses cost for entire trip")
     calculate_total_expenses(user_name)
-    print("Thank you for using my cli travel")
+    print("Thank you for using cli travel app")
 if __name__=="__main__":        
     main()
