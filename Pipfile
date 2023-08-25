@@ -8,6 +8,7 @@ ipdb = "*"
 sqlalchemy = "*"
 alembic = "*"
 simple-term-menu = "*"
+prettycli = "*"
 
 [dev-packages]
 
