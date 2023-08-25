@@ -149,6 +149,6 @@ def main():
     calculating_trip_cost(user_name)
     print("Calculating total expenses cost for entire trip")
     calculate_total_expenses(user_name)
-
+    print("Thank you for using my cli travel")
 if __name__=="__main__":        
     main()
