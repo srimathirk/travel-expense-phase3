@@ -47,24 +47,24 @@ if __name__ == '__main__':
 
     #insert tripdata
     trip_datas = [
-        ('Princeton, New Jersey','Philadelphia',3.82,50,5),
-        ('Catskills, New York','Lexington, Massachusetts',4.75,45,4),
-        ('New York City, NY', 'Los Angeles, CA',4.58,60,2),
-        ('Westerly, Rhode Island','Cape May, New Jersey',3.64,50,1),
-        ('Devils Tower, Wyoming','Niagara Falls',4.11,45,3),
-        ('Philadelphia','Southampton Beach, Long Island',4.11,55,5),
-        ('Montreal, Canada', 'New Jersey',3.64,55,4),
-        ('Chincoteague Island, Virginia', 'Franconia, New Hampshire',3.72,55,6),
-        ('The Skyline Drive, Virginia','Jersey City, NJ',3.64,55,7),
-        ('Moab, Utah', 'Camden, Maine',3.77,55,8),
-        ('Austin, Texas','Zion National Park',3.60,55,9),
-        ('Seneca Falls, New York','Princeton, New Jersey',4.05,65,12),
-        ('Southampton Beach, Long Island','Kent, Connecticut',5.5,65,11),
-        ('Killington, Vermont','Big Sur, California',3.81,65,10),
-        ('Hershey, Pennsylvania','Washington DC',3.99,65,8),
-        ('Atlantic City, New Jersey','Hudson Valley, New York',4.54,65,9),
-        ('Brandywine Valley, Pennsylvania', 'Atlantic City, New Jersey',3.25,45,6),
-        ('Kent, Connecticut','The Poconos Mountains',3.17,50,4)
+        ('Princeton, New Jersey','Philadelphia',3.82,20,5),
+        ('Catskills, New York','Lexington, Massachusetts',4.75,25,4),
+        ('New York City, NY', 'Los Angeles, CA',4.58,15,2),
+        ('Westerly, Rhode Island','Cape May, New Jersey',3.64,20,1),
+        ('Devils Tower, Wyoming','Niagara Falls',4.11,25,3),
+        ('Philadelphia','Southampton Beach, Long Island',4.11,20,5),
+        ('Montreal, Canada', 'New Jersey',3.64,15,4),
+        ('Chincoteague Island, Virginia', 'Franconia, New Hampshire',3.72,20,6),
+        ('The Skyline Drive, Virginia','Jersey City, NJ',3.64,25,7),
+        ('Moab, Utah', 'Camden, Maine',3.77,20,8),
+        ('Austin, Texas','Zion National Park',3.60,30,9),
+        ('Seneca Falls, New York','Princeton, New Jersey',4.05,20,12),
+        ('Southampton Beach, Long Island','Kent, Connecticut',5.5,25,11),
+        ('Killington, Vermont','Big Sur, California',3.81,15,10),
+        ('Hershey, Pennsylvania','Washington DC',3.99,20,8),
+        ('Atlantic City, New Jersey','Hudson Valley, New York',4.54,25,9),
+        ('Brandywine Valley, Pennsylvania', 'Atlantic City, New Jersey',3.25,20,6),
+        ('Connecticut','New Jersey',3.17,25,1)
     ]
     #seed data
     trips=[]

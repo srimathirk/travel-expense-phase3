@@ -210,14 +210,14 @@ def deleting_expense(expense_id):
         print("Expense not found.")
 
 def geocode_with_retry(geolocator, location):
-        max_attempts = 3
+        max_attempts = 4
         for attempt in range(max_attempts):
             try:
                 return geolocator.geocode(location)
             except GeocoderTimedOut:
                 if attempt < max_attempts - 1:
                     print("Service timed out. Retrying...")
-                    time.sleep(2 ** attempt)  # Exponential backoff
+                    time.sleep(4 ** attempt)  # Exponential backoff
                 else:
                     raise
 
