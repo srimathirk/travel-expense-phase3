@@ -6,4 +6,4 @@
 [✓] work on methods/functionality
 [✓] work on cli.py and give inputs and get outputs
 [✓] use debug to get correct results
-[ ] do more testing
+[✓] do more testing
