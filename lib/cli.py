@@ -3,7 +3,8 @@ from helpers import trip_exists, displaying_trips,get_trip,saving_tripdetails_db
 from helpers import expense_exists, displaying_expenses,get_trip_id,get_expense,saving_expensedetails,get_expense_id,updating_expensedetails,deleting_expense
 from header import welcome
 from helpers import calculate_total_expenses,adding_expenses,adding_more_expense
-
+import time
+from simple_term_menu import TerminalMenu
 def main():
     
     welcome()
@@ -18,27 +19,39 @@ def main():
         saving_userdetails_db(user_name,mail_id,phone_no)
         print("user saved")
         displaying_user(user_name)
-    while True:
-        update = input("Do you want to update User details? (yes/no)").lower()
-        if update == 'yes':
-            update_type = input("Do you want to update (mail/phone): ").lower()
-            if update_type in ["mail","phone"]:
-                update_value = input(f"Enter new {update_type}: ")
-                updating_userdetails(user_name,update_type,update_value)
-            else:
-                print("Invalid option")
-        elif update == 'no':
-            print("Going back to main menu")
-            break
-    while True:
-        delete = input("Do you want to delete User details? (yes/no)").lower()
-        if delete == 'yes':
-            deleting_user(user_name)
-            print("User deleted from database going back to main menu")
-            break
-        elif delete == 'no':
-            print("Back to main menu")
-            break
+    # print("Options: update, delete")
+    # option = input("Choose an option: ").lower()
+    user_options = ["update","delete","exit"]
+    user_terminal_menu = TerminalMenu(user_options)
+    user_entry_index = user_terminal_menu.show()
+    print(f"You selected {user_options[user_entry_index]}!")
+    selected_user_option = user_options[user_entry_index]
+    if selected_user_option == "update":
+        while True:
+            update = input("Do you want to update User details? (yes/no)").lower()
+            if update == 'yes':
+                update_type = input("Do you want to update (mail/phone): ").lower()
+                if update_type in ["mail","phone"]:
+                    update_value = input(f"Enter new {update_type}: ")
+                    updating_userdetails(user_name,update_type,update_value)
+                else:
+                    print("Invalid option")
+            elif update == 'no':
+                print("Going back to main menu")
+                break
+    elif selected_user_option == "delete":
+        while True:
+            delete = input("Do you want to delete User details? (yes/no)").lower()
+            if delete == 'yes':
+                deleting_user(user_name)
+                print("User deleted from database going back to main menu")
+                break
+            elif delete == 'no':
+                print("Back to main menu")
+                break
+    elif selected_user_option == "exit":
+        print(f"Showing trip details for {user_name}")
+    time.sleep(3)
     #user_name = input("Enter user Name associated with the trip: ")   #adding Trips CRUD
     print("Checking if trip details exists already: ")
     if trip_exists(user_name):
@@ -59,33 +72,42 @@ def main():
         saving_tripdetails_db(start_place,end_place,avg_gas_price,fuel_efficiency_mpg,user_id)
         print("trip details saved")
         displaying_trips(user_name)
-    while True:
-        update = input("Do you want to update Trip details? (yes/no)").lower()
-        trip_id = get_trip_id(user_name)
-        #trip_id = int(input("Enter trip_id to update"))
-        if update == 'yes':
-            trip_id = int(input("Enter trip_id to update: "))
-            update_type = input("Do you want to update (startplace/endplace/gascost/mpg): ").lower()
-            if update_type in ["startplace","endplace","gascost","mpg"]:
-                update_value = input(f"Enter new {update_type}: ")
-                updating_tripdetails(trip_id,update_type,update_value)
-            else:
-                print("Invalid option")
-        elif update == 'no':
-            print("Going back to main menu")
-            break
-    while True:
-        delete = input("Do you want to delete Trip details? (yes/no)").lower()
-        if delete == 'yes':
-            startplace = input("Enter start place for trip to delete: ")
-            endplace = input("Enter end place for trip to delete: ")
-            deleting_trip(user_name, startplace, endplace)
-            print("Trip deleted from database going back to main menu")
-            break
-        elif delete == 'no':
-            print("Back to main menu")
-            break
-
+    trip_options = ["update","delete","exit"]
+    trip_menu = TerminalMenu(trip_options)
+    trip_entry_index = trip_menu.show()
+    print(f"You selected {trip_options[trip_entry_index]}!")
+    selected_trip_option = trip_options[trip_entry_index]
+    if selected_trip_option == "update":
+        while True:
+            update = input("Do you want to update Trip details? (yes/no)").lower()
+            trip_id = get_trip_id(user_name)
+            #trip_id = int(input("Enter trip_id to update"))
+            if update == 'yes':
+                trip_id = int(input("Enter trip_id to update: "))
+                update_type = input("Do you want to update (startplace/endplace/gascost/mpg): ").lower()
+                if update_type in ["startplace","endplace","gascost","mpg"]:
+                    update_value = input(f"Enter new {update_type}: ")
+                    updating_tripdetails(trip_id,update_type,update_value)
+                else:
+                    print("Invalid option")
+            elif update == 'no':
+                print("Going back to main menu")
+                break
+    elif selected_trip_option == "delete":
+        while True:
+            delete = input("Do you want to delete Trip details? (yes/no)").lower()
+            if delete == 'yes':
+                startplace = input("Enter start place for trip to delete: ")
+                endplace = input("Enter end place for trip to delete: ")
+                deleting_trip(user_name, startplace, endplace)
+                print("Trip deleted from database going back to main menu")
+                break
+            elif delete == 'no':
+                print("Back to main menu")
+                break
+    elif selected_trip_option == "exit":
+        print(f"showing expense details associated with a Trip for {user_name}")
+    time.sleep(3)
     #user_name = input("Enter user Name associated with the expense: ")   #adding Expenses CRUD
     print("Checking if expense details exists already: ")
     if expense_exists(user_name):
@@ -97,37 +119,46 @@ def main():
         adding_expenses(user_name)
         #add = input("Do you want to add more expenses? (yes/no)").lower()
         adding_more_expense(user_name)
-    while True:
-        update = input("Do you want to update Expense details? (yes/no)").lower()
-        expense_id = get_expense_id(user_name)
-        #trip_id = int(input("Enter trip_id to update"))
-        if update == 'yes':
-            trip_id = int(input("Enter trip_id to update: "))
-            expense_id = int(input("Enter expense_id to update: "))
-            update_type = input("Do you want to update (category/amount): ").lower()
-            if update_type in ["category","amount"]:
-                update_value = input(f"Enter new {update_type}: ")
-                updating_expensedetails(expense_id,update_type,update_value)
-            else:
-                print("Invalid option")
-        elif update == 'no':
-            print("Going back to main menu")
-            break
-    
-    while True:
-        delete = input("Do you want to delete Expense details? (yes/no)").lower()
-        if delete == 'yes':
+    expense_options = ["update","delete","exit"]
+    expense_menu = TerminalMenu(expense_options)
+    expense_entry_index = expense_menu.show()
+    print(f"You selected {expense_options[expense_entry_index]}!")
+    selected_expense_option = expense_options[expense_entry_index]
+    if selected_expense_option == "update":
+        while True:
+            update = input("Do you want to update Expense details? (yes/no)").lower()
             expense_id = get_expense_id(user_name)
-            expense_id = input("Enter expense id to delete: ")
-            deleting_expense(expense_id)
-            print("Expense deleted from database going back to main menu")
-            break
-        elif delete == 'no':
-            print("Back to main menu")
-            break
+            #trip_id = int(input("Enter trip_id to update"))
+            if update == 'yes':
+                trip_id = int(input("Enter trip_id to update: "))
+                expense_id = int(input("Enter expense_id to update: "))
+                update_type = input("Do you want to update (category/amount): ").lower()
+                if update_type in ["category","amount"]:
+                    update_value = input(f"Enter new {update_type}: ")
+                    updating_expensedetails(expense_id,update_type,update_value)
+                else:
+                    print("Invalid option")
+            elif update == 'no':
+                print("Going back to main menu")
+                break
+    elif selected_expense_option == "delete":
+        while True:
+            delete = input("Do you want to delete Expense details? (yes/no)").lower()
+            if delete == 'yes':
+                expense_id = get_expense_id(user_name)
+                expense_id = input("Enter expense id to delete: ")
+                deleting_expense(expense_id)
+                print("Expense deleted from database going back to main menu")
+                break
+            elif delete == 'no':
+                print("Back to main menu")
+                break
+    elif selected_expense_option == "exit":
+        print(f"Calculating expense details associated with trip for {user_name}")
+    time.sleep(3)
     print("Calculating trip expense for username")
     #user_name =input("Enter username to display trip details: ")
-    displaying_trips(user_name)
+    #displaying_trips(user_name)
     #print("Calculating total distance of trip: ")
     #calculating_trip_cost(user_name)
     print("Calculating total expenses cost for entire trip")
